@@ -23,21 +23,24 @@ const IndexPage = ({ data }) => {
           grid-gap: 30px;
         `}
       >
-        {data.allDataJson.edges[0].node.entries.map((entry, index) => (
-          <div key={index}>
-            <h2>
-              {moment(entry.creationDate)
-                .tz(entry.timeZone)
-                .format("MMM D, YYYY")}
-            </h2>
-            <Img
-              fixed={
-                getImage(entry.photos[0].md5, entry.photos[0].type).node
-                  .childImageSharp.fixed
-              }
-            />
-          </div>
-        ))}
+        {data.allDataJson.edges[0].node.entries.map((entry, index) => {
+          const date = moment(entry.creationDate).tz(entry.timeZone)
+          return (
+            <div key={index}>
+              <h2>
+                {date.format("D") === "1" || index === 0
+                  ? date.format("MMM D")
+                  : date.format("D")}
+              </h2>
+              <Img
+                fixed={
+                  getImage(entry.photos[0].md5, entry.photos[0].type).node
+                    .childImageSharp.fixed
+                }
+              />
+            </div>
+          )
+        })}
       </div>
     </Layout>
   )

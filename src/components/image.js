@@ -9,11 +9,16 @@ const Image = ({ md5, type, cropped }) => {
         edges {
           node {
             childImageSharp {
-              hiRes: fluid(quality: 80) {
+              hiRes: fluid(maxWidth: 2048, quality: 80) {
                 ...GatsbyImageSharpFluid
                 originalName
               }
-              cropped: fluid(maxWidth: 500, maxHeight: 500, cropFocus: CENTER) {
+              cropped: fluid(
+                maxWidth: 500
+                maxHeight: 500
+                quality: 80
+                cropFocus: CENTER
+              ) {
                 ...GatsbyImageSharpFluid
               }
             }

@@ -28,32 +28,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           }
         }
       }
-      allFile(filter: { relativeDirectory: { eq: "images" } }) {
-        edges {
-          node {
-            childImageSharp {
-              hiRes: fluid(quality: 80) {
-                originalName
-                base64
-                aspectRatio
-                src
-                srcSet
-                sizes
-                originalImg
-              }
-              cropped: fluid(maxWidth: 500, maxHeight: 500, cropFocus: CENTER) {
-                originalName
-                base64
-                aspectRatio
-                src
-                srcSet
-                sizes
-                originalImg
-              }
-            }
-          }
-        }
-      }
     }
   `)
 
@@ -62,47 +36,15 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     return
   }
 
-  const allData = []
-  const allImages = result.data.allFile.edges
-
-  let i = 0
-  result.data.allDataJson.edges[0].node.entries.forEach(entry => {
-    const md5 = entry.photos[0].md5
-    const type = entry.photos[0].type
-    const image = allImages.find(
-      ({ node }) =>
-        node.childImageSharp.cropped.originalName === `${md5}.${type}`
-    )
-
-    allData[i] = {
-      creationDate: entry.creationDate,
-      timeZone: entry.timeZone,
-      md5,
-      type,
-      cropped: image.node.childImageSharp.cropped,
-      hiRes: image.node.childImageSharp.hiRes,
-    }
-
-    i++
-  })
-
-  createPage({
-    path: "/",
-    component: path.resolve(`src/templates/Main.js`),
-    context: {
-      allData,
-    },
-  })
-
   const singleImageTemplate = path.resolve(`src/templates/SingleImage.js`)
-  allData.forEach(entry => {
+  result.data.allDataJson.edges[0].node.entries.forEach(entry => {
     const date = moment(entry.creationDate).tz(entry.timeZone)
     const path = date.format("YYYY/MM/DD")
     createPage({
       path,
       component: singleImageTemplate,
       context: {
-        entry,
+        data: entry,
       },
     })
   })

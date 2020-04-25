@@ -23,16 +23,16 @@ const Layout = ({ children }) => {
   //   }
   // `)
 
-  const Layout = styled.div`
+  const StyledLayout = styled.div`
     margin: 0 auto;
     max-width: 1600px;
   `
   return (
     <>
       {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
-      <Layout>
+      <StyledLayout>
         <main>{children}</main>
-      </Layout>
+      </StyledLayout>
     </>
   )
 }

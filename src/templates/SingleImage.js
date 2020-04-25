@@ -6,14 +6,14 @@ import moment from "moment-timezone"
 import Image from "../components/image"
 
 const SingleImage = ({ pageContext, pageContext: { data } }) => {
-  const Wrapper = styled.div`
+  const StyledSingleImage = styled.div`
     color: #fff;
   `
 
   const date = moment(data.creationDate).tz(data.timeZone)
 
   return (
-    <Wrapper>
+    <StyledSingleImage>
       <Layout>
         <h1>
           {date.format("MMMM Do, YYYY")} <Link to="/">Back</Link>
@@ -24,7 +24,7 @@ const SingleImage = ({ pageContext, pageContext: { data } }) => {
           cropped={false}
         />
       </Layout>
-    </Wrapper>
+    </StyledSingleImage>
   )
 }
 

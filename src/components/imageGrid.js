@@ -23,17 +23,17 @@ const ImageGrid = () => {
     }
   `)
 
-  const ImageGrid = styled.div`
+  const StyledImageGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 2px;
   `
   return (
-    <ImageGrid>
+    <StyledImageGrid>
       {allData.allDataJson.edges[0].node.entries.map((entry, index) => {
         return <ImageGridItem entry={entry} index={index} key={index} />
       })}
-    </ImageGrid>
+    </StyledImageGrid>
   )
 }
 

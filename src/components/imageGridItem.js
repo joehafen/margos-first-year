@@ -10,7 +10,7 @@ const ImageGridItem = ({ entry, index }) => {
   const monthAndYear = date.format("MMM YYYY")
   const path = date.format("YYYY/MM/DD")
 
-  const ImageGridItem = styled.div`
+  const StyledImageGridItem = styled.div`
     position: relative;
     h2,
     h3 {
@@ -37,7 +37,7 @@ const ImageGridItem = ({ entry, index }) => {
   `
 
   return (
-    <ImageGridItem>
+    <StyledImageGridItem>
       <Link to={`/${path}`}>
         <h2>{day}</h2>
         <h3>{monthAndYear}</h3>
@@ -47,7 +47,7 @@ const ImageGridItem = ({ entry, index }) => {
           cropped={true}
         />
       </Link>
-    </ImageGridItem>
+    </StyledImageGridItem>
   )
 }
 

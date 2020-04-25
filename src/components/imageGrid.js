@@ -3,26 +3,26 @@ import styled from "@emotion/styled"
 import ImageGridItem from "./imageGridItem"
 import { useStaticQuery, graphql } from "gatsby"
 
-const ImageGrid = () => {
-  const allData = useStaticQuery(graphql`
-    query AllDataQuery {
-      allDataJson {
-        edges {
-          node {
-            entries {
-              creationDate
-              timeZone
-              photos {
-                md5
-                type
-              }
+const ImageGrid = ({ entries }) => {
+  const croppedImages = useStaticQuery(graphql`
+    {
+      allFile(filter: { relativeDirectory: { eq: "images" } }) {
+        nodes {
+          childImageSharp {
+            cropped: fluid(
+              maxWidth: 500
+              maxHeight: 500
+              quality: 80
+              cropFocus: CENTER
+            ) {
+              ...GatsbyImageSharpFluid
+              originalName
             }
           }
         }
       }
     }
   `)
-
   const StyledImageGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -30,8 +30,13 @@ const ImageGrid = () => {
   `
   return (
     <StyledImageGrid>
-      {allData.allDataJson.edges[0].node.entries.map((entry, index) => {
-        return <ImageGridItem entry={entry} index={index} key={index} />
+      {entries.map((entry, index) => {
+        const originalName = `${entry.photos[0].md5}.${entry.photos[0].type}`
+        const findImage = croppedImages.allFile.nodes.find(
+          node => node.childImageSharp.cropped.originalName === originalName
+        )
+        const croppedImage = findImage.childImageSharp.cropped
+        return <ImageGridItem key={index} entry={entry} image={croppedImage} />
       })}
     </StyledImageGrid>
   )

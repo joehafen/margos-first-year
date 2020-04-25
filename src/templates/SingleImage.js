@@ -1,11 +1,12 @@
 import React from "react"
 import styled from "@emotion/styled"
-import { Link } from "gatsby"
+import { Link, graphql } from "gatsby"
 import moment from "moment-timezone"
 import Img from "gatsby-image"
 
-const SingleImage = ({ data, pageContext: { entry } }) => {
-  const image = data.allFile.edges[0].node.childImageSharp.hiRes
+const SingleImage = ({ data, pageContext: { id } }) => {
+  const image = data.file.childImageSharp.hiRes
+  const entry = data.margoJson
 
   const StyledSingleImage = styled.div`
     position: relative;
@@ -51,22 +52,24 @@ const SingleImage = ({ data, pageContext: { entry } }) => {
 }
 
 export const SingleImageQuery = graphql`
-  query SingleImageQuery($originalName: String) {
-    allFile(
-      filter: {
-        childImageSharp: { fluid: { originalName: { eq: $originalName } } }
-      }
+  query SingleImageQuery($originalName: String, $id: String) {
+    file(
+      relativeDirectory: { eq: "images" }
+      childImageSharp: { fluid: { originalName: { eq: $originalName } } }
     ) {
-      edges {
-        node {
-          childImageSharp {
-            hiRes: fluid(maxWidth: 2048, quality: 80) {
-              ...GatsbyImageSharpFluid
-              originalName
-              aspectRatio
-            }
-          }
+      childImageSharp {
+        hiRes: fluid(maxWidth: 2048, quality: 80) {
+          ...GatsbyImageSharpFluid
+          aspectRatio
         }
+      }
+    }
+    margoJson(id: { eq: $id }) {
+      creationDate
+      timeZone
+      photos {
+        md5
+        type
       }
     }
   }

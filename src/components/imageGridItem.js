@@ -2,9 +2,9 @@ import React from "react"
 import moment from "moment-timezone"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
-import Image from "./image"
+import Img from "gatsby-image"
 
-const ImageGridItem = ({ entry, index }) => {
+const ImageGridItem = ({ entry, image }) => {
   const date = moment(entry.creationDate).tz(entry.timeZone)
   const day = date.format("D")
   const monthAndYear = date.format("MMM YYYY")
@@ -15,7 +15,6 @@ const ImageGridItem = ({ entry, index }) => {
     h2,
     h3 {
       position: absolute;
-
       right: 0;
       z-index: 1;
       margin-bottom: 0;
@@ -41,11 +40,7 @@ const ImageGridItem = ({ entry, index }) => {
       <Link to={`/${path}`}>
         <h2>{day}</h2>
         <h3>{monthAndYear}</h3>
-        <Image
-          md5={entry.photos[0].md5}
-          type={entry.photos[0].type}
-          cropped={true}
-        />
+        <Img fluid={image} />
       </Link>
     </StyledImageGridItem>
   )

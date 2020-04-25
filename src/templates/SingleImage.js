@@ -1,31 +1,75 @@
 import React from "react"
-import Layout from "../components/layout"
 import styled from "@emotion/styled"
 import { Link } from "gatsby"
 import moment from "moment-timezone"
-import Image from "../components/image"
+import Img from "gatsby-image"
 
-const SingleImage = ({ pageContext, pageContext: { data } }) => {
+const SingleImage = ({ data, pageContext: { entry } }) => {
+  const image = data.allFile.edges[0].node.childImageSharp.hiRes
+
   const StyledSingleImage = styled.div`
-    color: #fff;
+    position: relative;
+    display: grid;
+    grid-template-rows: 3.75rem 1fr;
+    height: 100vh;
+  `
+  const Header = styled.div`
+    justify-self: center;
+    margin-top: 0.75rem;
+    h1 {
+      margin-bottom: 0;
+      font-family: Heebo;
+      font-weight: 700;
+    }
+    .close {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  `
+  const ImgContainer = styled.div`
+    max-width: calc((100vh - 3.75rem) * ${image.aspectRatio});
+    align-self: center;
+    justify-self: center;
+    width: 100%;
   `
 
-  const date = moment(data.creationDate).tz(data.timeZone)
-
+  const date = moment(entry.creationDate).tz(entry.timeZone)
   return (
     <StyledSingleImage>
-      <Layout>
-        <h1>
-          {date.format("MMMM Do, YYYY")} <Link to="/">Back</Link>
-        </h1>
-        <Image
-          md5={data.photos[0].md5}
-          type={data.photos[0].type}
-          cropped={false}
-        />
-      </Layout>
+      <Header>
+        <h1>{date.format("MMMM Do, YYYY")}</h1>
+        <Link className="close" to="/">
+          Back
+        </Link>
+      </Header>
+      <ImgContainer>
+        <Img fluid={image} />
+      </ImgContainer>
     </StyledSingleImage>
   )
 }
+
+export const SingleImageQuery = graphql`
+  query SingleImageQuery($originalName: String) {
+    allFile(
+      filter: {
+        childImageSharp: { fluid: { originalName: { eq: $originalName } } }
+      }
+    ) {
+      edges {
+        node {
+          childImageSharp {
+            hiRes: fluid(maxWidth: 2048, quality: 80) {
+              ...GatsbyImageSharpFluid
+              originalName
+              aspectRatio
+            }
+          }
+        }
+      }
+    }
+  }
+`
 
 export default SingleImage

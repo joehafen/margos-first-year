@@ -6,6 +6,7 @@ html {
 
 body {
   background-color: #000;
+  color: #fff;
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -243,7 +244,7 @@ html {
 }
 
 body {
-  color: hsla(0, 0%, 0%, 0.8);
+  /* color: hsla(0, 0%, 0%, 0.8); */
   font-family: georgia, serif;
   font-weight: normal;
   word-wrap: break-word;

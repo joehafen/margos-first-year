@@ -44,7 +44,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path,
       component: singleImageTemplate,
       context: {
-        data: entry,
+        entry,
+        originalName: `${entry.photos[0].md5}.${entry.photos[0].type}`,
       },
     })
   })

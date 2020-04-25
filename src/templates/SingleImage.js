@@ -3,6 +3,7 @@ import styled from "@emotion/styled"
 import { Link, graphql } from "gatsby"
 import moment from "moment-timezone"
 import Img from "gatsby-image"
+import Layout from "../components/layout"
 
 const SingleImage = ({ data, pageContext: { id } }) => {
   const image = data.file.childImageSharp.hiRes
@@ -37,17 +38,19 @@ const SingleImage = ({ data, pageContext: { id } }) => {
 
   const date = moment(entry.creationDate).tz(entry.timeZone)
   return (
-    <StyledSingleImage>
-      <Header>
-        <h1>{date.format("MMMM Do, YYYY")}</h1>
-        <Link className="close" to="/">
-          Back
-        </Link>
-      </Header>
-      <ImgContainer>
-        <Img fluid={image} />
-      </ImgContainer>
-    </StyledSingleImage>
+    <Layout>
+      <StyledSingleImage>
+        <Header>
+          <h1>{date.format("MMMM Do, YYYY")}</h1>
+          <Link className="close" to="/">
+            Back
+          </Link>
+        </Header>
+        <ImgContainer>
+          <Img fluid={image} />
+        </ImgContainer>
+      </StyledSingleImage>
+    </Layout>
   )
 }
 

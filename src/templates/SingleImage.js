@@ -7,7 +7,23 @@ import Layout from "../components/layout"
 
 const SingleImage = ({ data, pageContext: { id } }) => {
   const image = data.file.childImageSharp.hiRes
-  const entry = data.margoJson
+  const currEntry = data.currEntry
+  const nextEntry = data.nextEntry
+  const prevEntry = data.prevEntry
+
+  const date = (entry, format) => {
+    const entryDate = moment(entry.creationDate).tz(entry.timeZone)
+    switch (format) {
+      case "id":
+        return entryDate.format("YYYY-MM-DD")
+      case "path":
+        return entryDate.format("YYYY/MM/DD")
+      case "display":
+        return entryDate.format("MMMM Do, YYYY")
+      default:
+        return entryDate
+    }
+  }
 
   const StyledSingleImage = styled.div`
     position: relative;
@@ -28,6 +44,16 @@ const SingleImage = ({ data, pageContext: { id } }) => {
       top: 0;
       right: 0;
     }
+    .prev {
+      position: absolute;
+      top: 20px;
+      right: 0;
+    }
+    .next {
+      position: absolute;
+      top: 40px;
+      right: 0;
+    }
   `
   const ImgContainer = styled.div`
     max-width: calc((100vh - 3.75rem) * ${image.aspectRatio});
@@ -36,13 +62,22 @@ const SingleImage = ({ data, pageContext: { id } }) => {
     width: 100%;
   `
 
-  const date = moment(entry.creationDate).tz(entry.timeZone)
   return (
     <Layout>
       <StyledSingleImage>
         <Header>
-          <h1>{date.format("MMMM Do, YYYY")}</h1>
-          <Link className="close" to="/">
+          <h1>{date(currEntry, "display")}</h1>
+          {prevEntry ? (
+            <Link className="prev" to={`/${date(prevEntry, "path")}`}>
+              Prev
+            </Link>
+          ) : null}
+          {nextEntry ? (
+            <Link className="next" to={`/${date(nextEntry, "path")}`}>
+              Next
+            </Link>
+          ) : null}
+          <Link className="close" to={`/#${date(currEntry, "id")}`}>
             Back
           </Link>
         </Header>
@@ -55,7 +90,12 @@ const SingleImage = ({ data, pageContext: { id } }) => {
 }
 
 export const SingleImageQuery = graphql`
-  query SingleImageQuery($originalName: String, $id: String) {
+  query SingleImageQuery(
+    $originalName: String
+    $currId: String
+    $prevId: String
+    $nextId: String
+  ) {
     file(
       relativeDirectory: { eq: "images" }
       childImageSharp: { fluid: { originalName: { eq: $originalName } } }
@@ -67,13 +107,21 @@ export const SingleImageQuery = graphql`
         }
       }
     }
-    margoJson(id: { eq: $id }) {
+    currEntry: margoJson(id: { eq: $currId }) {
       creationDate
       timeZone
       photos {
         md5
         type
       }
+    }
+    prevEntry: margoJson(id: { eq: $prevId }) {
+      creationDate
+      timeZone
+    }
+    nextEntry: margoJson(id: { eq: $nextId }) {
+      creationDate
+      timeZone
     }
   }
 `

@@ -34,14 +34,16 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }
 
   const singleImageTemplate = path.resolve(`src/templates/SingleImage.js`)
-  result.data.allMargoJson.nodes.forEach(entry => {
+  result.data.allMargoJson.nodes.map((entry, index, entries) => {
     const date = moment(entry.creationDate).tz(entry.timeZone)
     const path = date.format("YYYY/MM/DD")
     createPage({
       path,
       component: singleImageTemplate,
       context: {
-        id: entry.id,
+        currId: entry.id,
+        prevId: entries[index - 1] ? entries[index - 1].id : null,
+        nextId: entries[index + 1] ? entries[index + 1].id : null,
         originalName: `${entry.photos[0].md5}.${entry.photos[0].type}`,
       },
     })

@@ -9,6 +9,7 @@ const ImageGridItem = ({ entry, image }) => {
   const day = date.format("D")
   const monthAndYear = date.format("MMM YYYY")
   const path = date.format("YYYY/MM/DD")
+  const currId = date.format("YYYY-MM-DD")
 
   const StyledImageGridItem = styled.div`
     position: relative;
@@ -34,9 +35,8 @@ const ImageGridItem = ({ entry, image }) => {
       font-weight: 700;
     }
   `
-
   return (
-    <StyledImageGridItem>
+    <StyledImageGridItem id={currId}>
       <Link to={`/${path}`}>
         <h2>{day}</h2>
         <h3>{monthAndYear}</h3>

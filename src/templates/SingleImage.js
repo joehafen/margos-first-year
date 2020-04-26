@@ -1,29 +1,12 @@
 import React from "react"
 import styled from "@emotion/styled"
 import { Link, graphql } from "gatsby"
-import moment from "moment-timezone"
+import { date } from "../utils"
 import Img from "gatsby-image"
 import Layout from "../components/layout"
 
 const SingleImage = ({ data, pageContext: { id } }) => {
   const image = data.file.childImageSharp.hiRes
-  const currEntry = data.currEntry
-  const nextEntry = data.nextEntry
-  const prevEntry = data.prevEntry
-
-  const date = (entry, format) => {
-    const entryDate = moment(entry.creationDate).tz(entry.timeZone)
-    switch (format) {
-      case "id":
-        return entryDate.format("YYYY-MM-DD")
-      case "path":
-        return entryDate.format("YYYY/MM/DD")
-      case "display":
-        return entryDate.format("MMMM Do, YYYY")
-      default:
-        return entryDate
-    }
-  }
 
   const StyledSingleImage = styled.div`
     position: relative;
@@ -66,18 +49,18 @@ const SingleImage = ({ data, pageContext: { id } }) => {
     <Layout>
       <StyledSingleImage>
         <Header>
-          <h1>{date(currEntry, "display")}</h1>
-          {prevEntry ? (
-            <Link className="prev" to={`/${date(prevEntry, "path")}`}>
+          <h1>{date(data.currEntry, "display")}</h1>
+          {data.prevEntry ? (
+            <Link className="prev" to={`/${date(data.prevEntry, "path")}`}>
               Prev
             </Link>
           ) : null}
-          {nextEntry ? (
-            <Link className="next" to={`/${date(nextEntry, "path")}`}>
+          {data.nextEntry ? (
+            <Link className="next" to={`/${date(data.nextEntry, "path")}`}>
               Next
             </Link>
           ) : null}
-          <Link className="close" to={`/#${date(currEntry, "id")}`}>
+          <Link className="close" to={`/#${date(data.currEntry, "id")}`}>
             Back
           </Link>
         </Header>

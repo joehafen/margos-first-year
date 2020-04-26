@@ -35,8 +35,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   const singleImageTemplate = path.resolve(`src/templates/SingleImage.js`)
   result.data.allMargoJson.nodes.map((entry, index, entries) => {
-    const date = moment(entry.creationDate).tz(entry.timeZone)
-    const path = date.format("YYYY/MM/DD")
+    const path = moment(entry.creationDate)
+      .tz(entry.timeZone)
+      .format("YYYY/MM/DD")
     createPage({
       path,
       component: singleImageTemplate,

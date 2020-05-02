@@ -7,29 +7,13 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-// import { useStaticQuery, graphql } from "gatsby"
 import styled from "@emotion/styled"
-// import Header from "./header"
 import "./layout.css"
 
 const Layout = ({ children }) => {
-  // const data = useStaticQuery(graphql`
-  //   query SiteTitleQuery {
-  //     site {
-  //       siteMetadata {
-  //         title
-  //       }
-  //     }
-  //   }
-  // `)
-
-  const StyledLayout = styled.div`
-    margin: 0 auto;
-    max-width: 1600px;
-  `
+  const StyledLayout = styled.div``
   return (
     <>
-      {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
       <StyledLayout>
         <main>{children}</main>
       </StyledLayout>

@@ -3,6 +3,7 @@ import styled from "@emotion/styled"
 import BackgroundImage from "gatsby-background-image"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { today } from "../utils"
+import scrollTo from "gatsby-plugin-smoothscroll"
 
 const StyledHero = styled.div`
   width: 100%;
@@ -12,38 +13,59 @@ const StyledHero = styled.div`
     width: 100%;
   }
   .bg {
+    width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    padding-bottom: 5rem;
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 5rem;
+      @media screen and (max-width: 600px) {
+        padding-bottom: 2rem;
+      }
+      @media screen and (max-height: 600px) and (orientation: landscape) {
+        flex-direction: row;
+        padding-bottom: 1.25rem;
+      }
+      button {
+        padding: 1rem 1.25rem;
+        margin: 1.5rem 1rem 0;
+        @media screen and (max-height: 600px) and (orientation: landscape) {
+          margin-top: 0;
+        }
+        border: none;
+        background-color: rgba(20, 20, 20, 0.65);
+        color: #fff;
+        font-family: "Heebo";
+        font-weight: 300;
+        font-size: 1.15rem;
+        border-radius: 30px;
+        &:focus {
+          outline: 0;
+        }
+      }
+    }
   }
   h1 {
     font-family: "Fredoka One";
     font-weight: 400;
-    font-size: 7rem;
+    font-size: 14vw;
+    @media screen and (max-width: 600px) {
+      font-size: 18vw;
+    }
+    @media screen and (min-width: 1000px) {
+      font-size: 140px;
+    }
     text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
-  }
-  button {
-    padding: 1rem 1.25rem;
-    margin-top: 1.5rem;
-    border: none;
-    background-color: rgba(20, 20, 20, 0.65);
-    color: #fff;
-    font-family: "Heebo";
-    font-weight: 300;
-    font-size: 1.15rem;
-    border-radius: 30px;
-    &:focus {
-      outline: 0;
-    }
   }
 `
 
 const Hero = () => {
-  const backgroundImage = useStaticQuery(graphql`
+  const data = useStaticQuery(graphql`
     {
       file(
         relativeDirectory: { eq: "images" }
@@ -61,32 +83,24 @@ const Hero = () => {
       }
     }
   `)
+
   return (
     <StyledHero>
       <div className="hero-wrapper">
-        <BackgroundImage
-          fluid={backgroundImage.file.childImageSharp.fluid}
-          className="bg"
-        >
+        <BackgroundImage fluid={data.file.childImageSharp.fluid} className="bg">
           <h1>
             Margo's
             <br />
             First Year
           </h1>
-          <button>
-            <Link to={`/${today()}`} state={{ todaysDate: true }}>
-              Today's Date
-            </Link>
-          </button>
-          <button
-            onClick={() =>
-              document
-                .querySelector("#image-grid")
-                .scrollIntoView({ behavior: "smooth" })
-            }
-          >
-            View All
-          </button>
+          <div className="button-wrapper">
+            <button>
+              <Link to={`/${today()}`} state={{ todaysDate: true }}>
+                Today's Date
+              </Link>
+            </button>
+            <button onClick={() => scrollTo("#image-grid")}>View All</button>
+          </div>
         </BackgroundImage>
       </div>
     </StyledHero>

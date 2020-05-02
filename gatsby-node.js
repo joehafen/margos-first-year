@@ -43,8 +43,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       component: singleImageTemplate,
       context: {
         currId: entry.id,
-        prevId: entries[index - 1] ? entries[index - 1].id : null,
-        nextId: entries[index + 1] ? entries[index + 1].id : null,
+        prevId: entries[index - 1] && entries[index - 1].id,
+        nextId: entries[index + 1] && entries[index + 1].id,
         originalName: `${entry.photos[0].md5}.${entry.photos[0].type}`,
       },
     })

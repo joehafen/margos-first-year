@@ -24,12 +24,18 @@ const ImageGrid = ({ entries }) => {
     }
   `)
   const StyledImageGrid = styled.div`
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    background-color: #000;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 2px;
+    border-top: 2px solid #000;
+    box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.7);
   `
   return (
-    <StyledImageGrid>
+    <StyledImageGrid id="image-grid">
       {entries.map((entry, index) => {
         const originalName = `${entry.photos[0].md5}.${entry.photos[0].type}`
         const findImage = croppedImages.allFile.nodes.find(

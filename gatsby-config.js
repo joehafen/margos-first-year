@@ -40,7 +40,10 @@ module.exports = {
         fonts: [
           {
             family: `Heebo`,
-            variants: [`400`, `500`, `700`, `800`, `900`],
+            variants: [`100`, `300`, `400`, `500`, `700`, `800`, `900`],
+          },
+          {
+            family: `Fredoka One`,
           },
         ],
       },

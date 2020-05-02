@@ -17,3 +17,15 @@ export const date = (entry, format) => {
       return entryDate
   }
 }
+
+export const today = () => {
+  const today = moment()
+  const today2019 = moment().format("2019-MM-DD")
+  const margosBirthday = moment("2019-02-06")
+
+  if (moment(today2019).isBefore(margosBirthday)) {
+    return today.format("2020/MM/DD")
+  } else {
+    return today.format("2019/MM/DD")
+  }
+}

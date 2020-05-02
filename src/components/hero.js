@@ -4,10 +4,10 @@ import BackgroundImage from "gatsby-background-image"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import { today } from "../utils"
 import scrollTo from "gatsby-plugin-smoothscroll"
+import Div100vh from "react-div-100vh"
 
-const StyledHero = styled.div`
+const StyledHero = styled(Div100vh)`
   width: 100%;
-  height: 100vh;
   .hero-wrapper {
     position: fixed;
     width: 100%;
@@ -22,13 +22,13 @@ const StyledHero = styled.div`
     .button-wrapper {
       display: flex;
       flex-direction: column;
-      padding-bottom: 5rem;
+      padding-bottom: 8rem;
       @media screen and (max-width: 600px) {
-        padding-bottom: 2rem;
+        padding-bottom: 9rem;
       }
       @media screen and (max-height: 600px) and (orientation: landscape) {
         flex-direction: row;
-        padding-bottom: 1.25rem;
+        padding-bottom: 4rem;
       }
       button {
         padding: 1rem 1.25rem;

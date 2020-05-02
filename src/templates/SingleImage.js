@@ -10,19 +10,19 @@ import {
   faChevronRight,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons"
+import Div100vh from "react-div-100vh"
 
 const SingleImage = ({ data, pageContext: { id }, location: { state } }) => {
   const image = data.file.childImageSharp.hiRes
   const todaysDate = (state && state.todaysDate) || null
 
-  const StyledSingleImage = styled.div`
+  const StyledSingleImage = styled(Div100vh)`
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
     align-items: center;
-    height: 100vh;
     h2 {
       position: absolute;
       width: 80%;

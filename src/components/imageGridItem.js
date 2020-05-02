@@ -12,7 +12,6 @@ const ImageGridItem = ({ entry, image }) => {
     &:hover {
       transform: scale(1.08);
       transition-duration: 0.25s;
-      border: 2px solid #000;
       z-index: 1;
     }
   `

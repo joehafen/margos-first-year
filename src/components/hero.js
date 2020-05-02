@@ -46,6 +46,11 @@ const StyledHero = styled(Div100vh)`
         &:focus {
           outline: 0;
         }
+        transition-duration: 0.25s;
+        &:hover {
+          transform: scale(1.15);
+          transition-duration: 0.25s;
+        }
       }
     }
   }

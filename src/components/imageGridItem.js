@@ -8,6 +8,13 @@ import ImageDate from "./imageDate"
 const ImageGridItem = ({ entry, image }) => {
   const StyledImageGridItem = styled.div`
     position: relative;
+    transition-duration: 0.25s;
+    &:hover {
+      transform: scale(1.08);
+      transition-duration: 0.25s;
+      border: 2px solid #000;
+      z-index: 1;
+    }
   `
   return (
     <StyledImageGridItem id={date(entry, "id")}>

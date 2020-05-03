@@ -102,7 +102,7 @@ const Hero = () => {
           <div className="button-wrapper">
             <button>
               <Link to={`/${today()}`} state={{ todaysDate: true }}>
-                Today's Date
+                On This Day
               </Link>
             </button>
             <button onClick={() => scrollTo("#image-grid")}>View All</button>

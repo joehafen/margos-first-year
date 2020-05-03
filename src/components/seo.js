@@ -28,7 +28,7 @@ function SEO({ description, lang, meta, title }) {
         ) {
           nodes {
             childImageSharp {
-              fixed(width: 1200, height: 1200, quality: 80, cropFocus: CENTER) {
+              fixed(width: 1200, height: 1200, quality: 80, cropFocus: NORTH) {
                 src
               }
             }

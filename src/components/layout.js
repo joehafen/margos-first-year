@@ -7,16 +7,12 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-import styled from "@emotion/styled"
 import "./layout.css"
 
 const Layout = ({ children }) => {
-  const StyledLayout = styled.div``
   return (
     <>
-      <StyledLayout>
-        <main>{children}</main>
-      </StyledLayout>
+      <main>{children}</main>
     </>
   )
 }

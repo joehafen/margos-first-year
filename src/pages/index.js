@@ -9,7 +9,7 @@ const IndexPage = ({ data }) => {
   const entries = data.allMargoJson.nodes
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO />
       <Hero />
       <ImageGrid entries={entries} />
     </Layout>

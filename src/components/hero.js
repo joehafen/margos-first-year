@@ -8,6 +8,7 @@ import Div100vh from "react-div-100vh"
 
 const StyledHero = styled(Div100vh)`
   width: 100%;
+  height: 100vh;
   .hero-wrapper {
     position: fixed;
     width: 100%;
